@@ -1,0 +1,490 @@
+/* =========================================================
+   SITE PESSOAL – GUSTAVO SILVEIRA SILVA (versão com várias páginas)
+   HTML e CSS – Criação de Websites • Turma 202600084 • Senac PR
+
+   Cores usadas:
+   azul escuro  #003D76   (títulos, menu, botões)
+   laranja      #F58020   (bordas e detalhes decorativos)
+   laranja txt  #A64D00   (textos, botões e foco: contraste acima de 4,5)
+   cinza texto  #3A4553
+   fundo claro  #F3F6FA
+   ========================================================= */
+
+/* ---------- 1. CONFIGURAÇÃO GERAL (Aula 06) ---------- */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;       /* rolagem suave nos links internos */
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    color: #3A4553;
+    background-color: #FFFFFF;
+}
+
+img {
+    max-width: 100%;               /* imagem fluida (Aula 08) */
+    height: auto;
+    display: block;
+}
+
+h1, h2, h3 {
+    color: #003D76;
+    line-height: 1.2;
+}
+
+a {
+    color: #003D76;
+}
+
+/* Container: largura fluida com limite (Aula 06) */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Foco visível para quem usa teclado (Aula 09) */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #A64D00;
+    outline-offset: 3px;
+}
+
+/* ---------- 2. CABEÇALHO E MENU (Aula 07: Flexbox) ---------- */
+/* No fundo azul, o foco usa o laranja claro (contraste maior) */
+.topo a:focus-visible {
+    outline-color: #F58020;
+}
+
+.topo {
+    position: sticky;              /* cabeçalho fixo no topo ao rolar */
+    top: 0;
+    z-index: 100;                  /* Aumentado para o submenu flutuar acima do conteúdo */
+    background-color: #003D76;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+}
+
+.marca {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* NOVO: Classe para identificar os itens que possuem submenus */
+.menu-item-has-children {
+    position: relative;            /* Torna este item a base de alinhamento do submenu */
+}
+
+.menu a {
+    display: block;
+    padding: 8px 14px;
+    border-radius: 20px;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.menu a:hover,
+.menu a:focus-visible {
+    background-color: #A64D00;
+}
+
+/* Página atual destacada no menu (aria-current="page" no HTML) */
+.menu a[aria-current="page"] {
+    background-color: #FFFFFF;
+    color: #003D76;
+    font-weight: bold;
+}
+
+/* ---------------------------------------------------------
+   NOVAS REGRAS DO SUBMENU (Aparece apenas no hover)
+   --------------------------------------------------------- */
+
+/* Oculta o submenu por padrão e aplica a estilização flutuante */
+.submenu {
+    display: none;                 /* Oculta completamente */
+    position: absolute;            /* Faz flutuar abaixo do menu principal */
+    top: 100%;                     /* Alinha exatamente abaixo do botão pai */
+    left: 0;
+    background-color: #003D76;     /* Mantém o azul escuro padrão do seu site */
+    border-top: 3px solid #F58020; /* Detalhe decorativo em laranja do seu projeto */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    min-width: 180px;              /* Garante largura suficiente para o texto */
+    padding: 8px 0;
+    margin: 4px 0 0 0;
+    list-style: none;
+    border-radius: 8px;            /* Cantos levemente arredondados */
+    z-index: 1000;
+}
+
+/* Remove o formato arredondado de pílula nos links internos do submenu */
+.submenu li {
+    width: 100%;
+}
+
+.submenu a {
+    border-radius: 0;
+    padding: 8px 16px;
+    font-size: 15px;               /* Um pouco menor para hierarquia visual */
+}
+
+/* Garante que o item da página atual dentro do submenu se comporte bem */
+.submenu a[aria-current="page"] {
+    background-color: #F3F6FA;
+    color: #003D76;
+}
+
+/* A MÁGICA: Mostra o submenu APENAS quando o mouse passa por cima do item pai */
+.menu-item-has-children:hover .submenu {
+    display: block;                /* Altera de 'none' para 'block' ao passar o mouse */
+}
+
+
+/* ---------- FAIXA DE TÍTULO DAS PÁGINAS INTERNAS ---------- */
+.pagina-titulo {
+    padding: 45px 0;
+    background-color: #F3F6FA;
+    border-bottom: 4px solid #F58020;
+}
+
+.pagina-titulo h1 {
+    margin: 5px 0 10px;
+    font-size: 40px;
+}
+
+.pagina-titulo p {
+    margin: 0;
+}
+
+/* ---------- ATALHOS DA PÁGINA INICIAL (Grid) ---------- */
+.grade-atalhos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 20px;
+}
+
+.atalho {
+    color: #3A4553;
+    text-decoration: none;          /* o card inteiro é um link */
+}
+
+.atalho h3 {
+    color: #003D76;
+}
+
+.atalho:hover h3,
+.atalho:focus-visible h3 {
+    color: #A64D00;
+}
+
+/* ---------- 3. PERFIL (Aula 07: foto + texto lado a lado) ---------- */
+.perfil {
+    padding: 60px 0;
+    background-color: #F3F6FA;
+}
+
+.perfil-conteudo {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.foto {
+    flex-shrink: 0;                /* a foto não encolhe */
+    width: 260px;
+    margin: 0;
+}
+
+.foto img {
+    border-radius: 50%;            /* foto redonda */
+    border: 6px solid #FFFFFF;
+    box-shadow: 0 10px 30px rgba(0, 61, 118, 0.15);
+}
+
+.chamada {
+    margin: 0;
+    color: #A64D00;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.perfil h1 {
+    margin: 5px 0 10px;
+    font-size: 44px;
+}
+
+.cargo {
+    margin-top: 0;
+    font-weight: bold;
+    color: #003D76;
+}
+
+.acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+/* ---------- 4. BOTÕES (Aula 09: hover + transition) ---------- */
+.botao {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 2px solid #003D76;
+    border-radius: 8px;
+    background-color: #003D76;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.botao:hover,
+.botao:focus-visible {
+    background-color: #A64D00;
+    border-color: #A64D00;
+}
+
+.botao-contorno {
+    background-color: transparent;
+    color: #003D76;
+}
+
+.botao-contorno:hover,
+.botao-contorno:focus-visible {
+    color: #FFFFFF;
+}
+
+/* ---------- 5. SEÇÕES E CARDS (Aula 06: Box Model) ---------- */
+.secao {
+    padding: 60px 0;
+    scroll-margin-top: 70px;       /* o menu fixo não cobre o título */
+}
+
+.secao-clara {
+    background-color: #F3F6FA;
+}
+
+.secao h2 {
+    margin-top: 0;
+    font-size: 32px;
+}
+
+.card {
+    padding: 25px;
+    border: 1px solid #DCE3EC;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 61, 118, 0.12);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+/* ---------- 6. GRADES (Aula 08: CSS Grid) ---------- */
+.grade-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.grade-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* Cards que se ajustam sozinhos: auto-fit + minmax */
+.grade-projetos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* Projeto em destaque ocupa 2 colunas */
+.destaque {
+    grid-column: span 2;
+    border-color: #F58020;
+}
+
+.tag {
+    display: inline-block;
+    margin: 0 0 10px;
+    padding: 2px 12px;
+    border-radius: 20px;
+    background-color: #FDEBD9;
+    color: #8A4A0B;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* ---------- 7. ETIQUETAS DE COMPETÊNCIAS (Flexbox com wrap) ---------- */
+.etiquetas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.etiquetas li {
+    padding: 4px 12px;
+    border-radius: 20px;
+    background-color: #E6EEF6;
+    color: #003D76;
+    font-size: 15px;
+}
+
+/* ---------- 8. LINHA DO TEMPO DA EXPERIÊNCIA ---------- */
+.linha-tempo {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-left: 3px solid #F58020;
+}
+
+.linha-tempo li {
+    margin-bottom: 25px;
+    padding-left: 25px;
+}
+
+.linha-tempo time {
+    color: #A64D00;
+    font-weight: bold;
+}
+
+.linha-tempo h3 {
+    margin: 4px 0;
+}
+
+.linha-tempo p {
+    margin: 0;
+}
+
+.observacao {
+    font-style: italic;
+}
+
+/* ---------- 9. PERGUNTAS FREQUENTES (details e summary) ---------- */
+details {
+    margin-bottom: 12px;
+    padding: 15px 20px;
+    border: 1px solid #DCE3EC;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #003D76;
+}
+
+details[open] summary {
+    color: #A64D00;
+}
+
+details p {
+    margin-bottom: 0;
+}
+
+/* ---------- 10. FORMULÁRIO (Aula 09: label + foco) ---------- */
+.formulario {
+    display: grid;
+    gap: 8px;
+}
+
+.formulario h2 {
+    margin-bottom: 8px;
+}
+
+.formulario label {
+    font-weight: bold;
+    color: #003D76;
+}
+
+.formulario input,
+.formulario textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #C9D3DF;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.formulario input:focus,
+.formulario textarea:focus {
+    border-color: #003D76;
+}
+
+.formulario .botao {
+    margin-top: 10px;
+}
+
+/* ---------- 11. RODAPÉ ---------- */
+.rodape {
+    background-color: #003D76;
+    color: #FFFFFF;
+}
+
+.rodape p {
+    margin: 0;
+    font-size: 15px;
+}
+
+/* ---------- 12. RESPONSIVO (Aula 08: media queries) ---------- */
+
+/* Tablet: até 900px */
+@media (max-width: 900px) {
+    .grade-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .perfil-conteudo {
+        flex-direction: column;     /* foto em cima do texto */
+        text-align: center;
+    }
+
+    .acoes {
+        justify-content: center;
+    }
+}
+
